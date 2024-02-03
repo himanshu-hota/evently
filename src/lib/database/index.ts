@@ -4,17 +4,19 @@ const MONGODB_URL = process.env.MONGODB_URL;
 
 let cached = (global as any).mongoose || {conn:null,promise:null};
 
-export const connectToDB = async () => {
-    if(cached.conn) return cached.connect;
+export const connectToDatabase = async () => {
+  if (cached.conn) return cached.connect;
 
-    if(!MONGODB_URL) throw new Error('MONGODB_URL missing');
+  if (!MONGODB_URL) throw new Error("MONGODB_URL missing");
 
-    cached.promise = cached.promise || mongoose.connect(MONGODB_URL,{
-        dbName:'evently',
-        bufferCommands:false
+  cached.promise =
+    cached.promise ||
+    mongoose.connect(MONGODB_URL, {
+      dbName: "evently",
+      bufferCommands: false,
     });
 
-    cached.conn = await cached.promise;
+  cached.conn = await cached.promise;
 
-    return cached.conn;
-}
+  return cached.conn;
+};
