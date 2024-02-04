@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { auth } from "@clerk/nextjs";
 import { getEventsByUser } from "@/lib/actions/event.actions";
+import { getOrdersByUser } from "@/lib/actions/order.actions";
+import { IOrder } from "@/lib/database/models/order.model";
 
 const Profile = async () => {
   const { sessionClaims } = auth();
@@ -11,6 +13,10 @@ const Profile = async () => {
   const userId = sessionClaims?.userId as string;
 
   const organizedEvents = await getEventsByUser({ userId, page: 1 });
+
+  const orders = await getOrdersByUser({ userId, page: 1 });
+
+  const orderdEvents = orders?.data.map((order: IOrder) => order.event) || [];
 
   return (
     <>
@@ -26,16 +32,18 @@ const Profile = async () => {
       </section>
 
       <section className="wrapper my-8 ">
-        {/* <Collection
-          data={allEvents?.data}
-          emptyTitle="No events tickets puchased yet"
-          emptyStateSubText="No worries - plenty of exciting events to explore"
-          collectionType="My_Tickets"
-          limit={3}
-          page={1}
-          urlParamName="ordersPage"
-          totalPages={2}
-        /> */}
+        {orderdEvents && (
+          <Collection
+            data={orderdEvents}
+            emptyTitle="No events tickets puchased yet"
+            emptyStateSubText="No worries - plenty of exciting events to explore"
+            collectionType="My_Tickets"
+            limit={3}
+            page={1}
+            urlParamName="ordersPage"
+            totalPages={2}
+          />
+        )}
       </section>
 
       {/* My Events */}
