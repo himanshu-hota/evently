@@ -1,10 +1,10 @@
-import { IEvent } from '@/lib/database/models/event.model';
-import { formatDateTime } from '@/lib/utils';
-import { auth } from '@clerk/nextjs';
-import Image from 'next/image';
-import Link from 'next/link';
-import React from 'react';
-import DeleteConfirmation from './DeleteConfirmation';
+import { IEvent } from "@/lib/database/models/event.model";
+import { formatDateTime } from "@/lib/utils";
+import { auth } from "@clerk/nextjs";
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
+import DeleteConfirmation from "./DeleteConfirmation";
 
 type CardProps = {
   event: IEvent;
@@ -12,7 +12,7 @@ type CardProps = {
   hidePrice?: boolean;
 };
 
-const Card = ({event,hasOrderLink,hidePrice} : CardProps) => {
+const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId as string;
 
@@ -69,7 +69,7 @@ const Card = ({event,hasOrderLink,hidePrice} : CardProps) => {
             {event.organizer.firstName} {event.organizer.lastName}
           </p>
 
-          {hasOrderLink && (
+          {/* {hasOrderLink && (
             <Link href={`/orders?eventId=${event._id}`} className="flex gap-2">
               <p className="text-primary-500">Order Details</p>
               <Image
@@ -79,11 +79,11 @@ const Card = ({event,hasOrderLink,hidePrice} : CardProps) => {
                 height={10}
               />
             </Link>
-          )}
+          )} */}
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default Card;

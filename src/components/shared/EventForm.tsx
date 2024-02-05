@@ -30,6 +30,7 @@ import { useUploadThing } from "@/lib/uploadthing";
 import { useRouter } from "next/navigation";
 import { createEvent, updateEvent } from "@/lib/actions/event.actions";
 import { IEvent } from "@/lib/database/models/event.model";
+import { handleError } from "@/lib/utils";
 
 type EventFormProp = {
   userId: string;
@@ -85,30 +86,29 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProp) => {
           Router.push(`/events/${newEvent._id.toString()}`);
         }
       } catch (err) {
-        console.log(err);
+        handleError(err);
       }
     }
 
     if (type === "Update") {
-      if (!eventId){
-        console.log('No event id found');
+      if (!eventId) {
         Router.back();
         return;
       }
-      
+
       try {
         const updatedEvent = await updateEvent({
           userId,
-          event:{...values,imageUrl:uploadedImageUrl,_id:eventId},
-          path:`/events/${eventId}`
-        })
-        
+          event: { ...values, imageUrl: uploadedImageUrl, _id: eventId },
+          path: `/events/${eventId}`,
+        });
+
         if (updatedEvent) {
           form.reset();
           Router.push(`/events/${updatedEvent._id.toString()}`);
         }
       } catch (err) {
-        console.log(err);
+        handleError(err);
       }
     }
   }

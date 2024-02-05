@@ -1,9 +1,9 @@
 import { Schema, model, models, Document } from "mongoose";
 
 export interface IOrder extends Document {
-  createdAt: Date;
-  stripeId: string;
-  totalAmount: string;
+  // createdAt: Date;
+  // stripeId: string;
+  // totalAmount: string;
   event: {
     _id: string;
     title: string;
@@ -17,9 +17,9 @@ export interface IOrder extends Document {
 
 export type IOrderItem = {
   _id: string;
-  totalAmount: string;
-  createdAt: Date;
-  eventTitle: string;
+  // totalAmount: string;
+  // createdAt: Date;
+  // eventTitle: string;
   eventId: string;
   buyer: string;
 };
@@ -27,16 +27,16 @@ export type IOrderItem = {
 const OrderSchema = new Schema({
   createdAt: {
     type: Date,
-    default: Date.now,
+    default: Date.now(),
   },
-  stripeId: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  totalAmount: {
-    type: String,
-  },
+  // stripeId: {
+  //   type: String,
+  //   required: true,
+  //   unique: true,
+  // },
+  // totalAmount: {
+  //   type: String,
+  // },
   event: {
     type: Schema.Types.ObjectId,
     ref: "Event",
